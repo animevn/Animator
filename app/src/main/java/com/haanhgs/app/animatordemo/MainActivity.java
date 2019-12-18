@@ -2,6 +2,7 @@ package com.haanhgs.app.animatordemo;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -148,14 +149,69 @@ public class MainActivity extends AppCompatActivity {
         imageView.startAnimation(animRotateLeft);
     }
 
+    private void setupViewport(){
+        float scale = getResources().getDisplayMetrics().density;
+        imageView.setCameraDistance(6500 * scale);
+    }
+
+    private void handleOpenLeft(){
+        setupViewport();
+        disableButtons();
+        flipLeftOut.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                flipImage();
+                flipLeftIn.setTarget(imageView);
+                flipLeftIn.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        enableButtons();
+                    }
+                });
+                flipLeftIn.start();
+            }
+        });
+        flipLeftOut.setTarget(imageView);
+        cardState = cardState == Face ? Back : Face;
+        flipLeftOut.start();
+    }
+
+    private void handleOpenRight(){
+        setupViewport();
+        disableButtons();
+        flipRightOut.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                flipImage();
+                flipRightIn.setTarget(imageView);
+                flipRightIn.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        enableButtons();
+                    }
+                });
+                flipRightIn.start();
+            }
+        });
+        flipRightOut.setTarget(imageView);
+        cardState = cardState == Face ? Back : Face;
+        flipRightOut.start();
+    }
+
 
     @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight,
             R.id.bnAnimationFade, R.id.bnAnimationRotate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bnAnimatorLeft:
+                handleOpenLeft();
                 break;
             case R.id.bnAnimatorRight:
+                handleOpenRight();
                 break;
             case R.id.bnAnimationFade:
                 handleFade();
