@@ -9,10 +9,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.haanhgs.app.animatordemo.CardState.Back;
+import static com.haanhgs.app.animatordemo.CardState.Face;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private Animator flipLeftOut;
     private Animator flipRightIn;
     private Animator flipRightOut;
+
+    private CardState cardState = Face;
 
     private void requestPortraitMode(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -65,7 +73,84 @@ public class MainActivity extends AppCompatActivity {
         initAnimator();
     }
 
-    @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight, R.id.bnAnimationFade, R.id.bnAnimationRotate})
+    //Glide not work well with animation pivot, need checking
+    private void flipImage(){
+        if (cardState == Face){
+           imageView.setImageResource(R.drawable.ace);
+        }else {
+            imageView.setImageResource(R.drawable.ace_back);
+        }
+    }
+
+    private void disableButtons(){
+        bnAnimationFade.setEnabled(false);
+        bnAnimationRotate.setEnabled(false);
+        bnAnimatorLeft.setEnabled(false);
+        bnAnimatorRight.setEnabled(false);
+    }
+
+    private void enableButtons(){
+        bnAnimationFade.setEnabled(true);
+        bnAnimationRotate.setEnabled(true);
+        bnAnimatorLeft.setEnabled(true);
+        bnAnimatorRight.setEnabled(true);
+    }
+
+    private void handleFade(){
+        disableButtons();
+        animFadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override public void onAnimationStart(Animation animation) {}
+            @Override public void onAnimationRepeat(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animFadeIn.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {}
+                    @Override public void onAnimationRepeat(Animation animation) {}
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        enableButtons();
+                    }
+                });
+                flipImage();
+                animFadeIn.setDuration(2000);
+                imageView.startAnimation(animFadeIn);
+            }
+        });
+        cardState = cardState == Face? Back : Face;
+        animFadeOut.setDuration(2000);
+        imageView.startAnimation(animFadeOut);
+    }
+
+    private void handleRotate(){
+        disableButtons();
+        animRotateLeft.setAnimationListener(new Animation.AnimationListener() {
+            @Override public void onAnimationStart(Animation animation) {}
+            @Override public void onAnimationRepeat(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animRotateRight.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {}
+                    @Override public void onAnimationRepeat(Animation animation) {}
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        enableButtons();
+                    }
+                });
+                flipImage();
+                imageView.startAnimation(animRotateRight);
+            }
+        });
+        cardState = cardState == Face? Back : Face;
+        imageView.startAnimation(animRotateLeft);
+    }
+
+
+    @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight,
+            R.id.bnAnimationFade, R.id.bnAnimationRotate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bnAnimatorLeft:
@@ -73,8 +158,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bnAnimatorRight:
                 break;
             case R.id.bnAnimationFade:
+                handleFade();
                 break;
             case R.id.bnAnimationRotate:
+                handleRotate();
                 break;
         }
     }
