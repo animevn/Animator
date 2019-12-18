@@ -6,6 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.55"
+        app:srcCompat="@drawable/ace" />
 
+    <Button
+        android:id="@+id/bnAnimatorLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/flipleft"
+        app:layout_constraintBottom_toTopOf="@+id/bnAnimatorRight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bnAnimationFade" />
 
+    <Button
+        android:id="@+id/bnAnimatorRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/flipright"
+        app:layout_constraintBottom_toBottomOf="@+id/bnAnimationRotate"
+        app:layout_constraintEnd_toEndOf="@+id/bnAnimatorLeft"
+        app:layout_constraintStart_toStartOf="@+id/bnAnimatorLeft" />
+
+    <Button
+        android:id="@+id/bnAnimationFade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/button"
+        app:layout_constraintBottom_toTopOf="@+id/bnAnimationRotate"
+        app:layout_constraintEnd_toStartOf="@+id/bnAnimatorLeft"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bnAnimationRotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="@string/rotate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bnAnimationFade"
+        app:layout_constraintStart_toStartOf="@+id/bnAnimationFade" />
 </androidx.constraintlayout.widget.ConstraintLayout>

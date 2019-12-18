@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Animator Demo</string>
+    <string name="button">Fade In Out</string>
+    <string name="rotate">Rotate In Out</string>
+    <string name="flipleft">Flip Left</string>
+    <string name="flipright">Flip Right</string>
 </resources>
