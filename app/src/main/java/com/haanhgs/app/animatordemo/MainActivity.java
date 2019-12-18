@@ -1,8 +1,12 @@
 package com.haanhgs.app.animatordemo;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +27,32 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bnAnimationRotate)
     Button bnAnimationRotate;
 
+    private Animation animFadeIn;
+    private Animation animFadeOut;
+    private Animation animRotateLeft;
+    private Animation animRotateRight;
+
+    private Animator flipLeftIn;
+    private Animator flipLeftOut;
+    private Animator flipRightIn;
+    private Animator flipRightOut;
+
     private void requestPortraitMode(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    private void initAnimation(){
+        animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        animFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        animRotateLeft = AnimationUtils.loadAnimation(this, R.anim.rotate_left);
+        animRotateRight = AnimationUtils.loadAnimation(this, R.anim.rotate_right);
+    }
+
+    private void initAnimator(){
+        flipLeftIn = AnimatorInflater.loadAnimator(this, R.animator.flip_left_in);
+        flipLeftOut = AnimatorInflater.loadAnimator(this, R.animator.flip_left_out);
+        flipRightIn = AnimatorInflater.loadAnimator(this, R.animator.flip_right_in);
+        flipRightOut = AnimatorInflater.loadAnimator(this, R.animator.flip_right_out);
     }
 
     @Override
@@ -33,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         requestPortraitMode();
+        initAnimation();
+        initAnimator();
     }
 
     @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight, R.id.bnAnimationFade, R.id.bnAnimationRotate})
