@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CardState cardState = Face;
 
+
     private void requestPortraitMode(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
