@@ -10,14 +10,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import static com.haanhgs.app.animatordemo.CardState.Back;
 import static com.haanhgs.app.animatordemo.CardState.Face;
 
