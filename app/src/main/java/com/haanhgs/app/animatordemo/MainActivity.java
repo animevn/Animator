@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import static com.haanhgs.app.animatordemo.CardState.Back;
 import static com.haanhgs.app.animatordemo.CardState.Face;
 
+//test
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView)
