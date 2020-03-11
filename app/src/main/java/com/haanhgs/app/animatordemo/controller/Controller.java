@@ -24,9 +24,9 @@ public class Controller {
     private Animator flipRightIn;
     private Animator flipRightOut;
 
-    private Activity activity;
+    private final Activity activity;
     private CardState cardState = Front;
-    private OnAnimation onAnimation;
+    private final OnAnimation onAnimation;
 
     private void requestPortraitMode(){
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
