@@ -41,8 +41,10 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bnAnimatorLeft:
+                controller.handleFlipLeft(imageView);
                 break;
             case R.id.bnAnimatorRight:
+                controller.handleFlipRight(imageView);
                 break;
             case R.id.bnAnimationFade:
                 controller.handleFadeIn(imageView);

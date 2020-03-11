@@ -9,9 +9,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
 import com.haanhgs.app.animatordemo.R;
-
 import static com.haanhgs.app.animatordemo.controller.CardState.Back;
 import static com.haanhgs.app.animatordemo.controller.CardState.Front;
 
@@ -151,6 +149,30 @@ public class Controller {
         flipCard();
         flipLeftOut.setTarget(imageView);
         flipLeftOut.start();
+    }
+
+    public void handleFlipRight(ImageView imageView){
+        setupViewport(imageView);
+        onAnimation.animationStart();
+        flipRightOut.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                renderImage(imageView);
+                flipRightIn.setTarget(imageView);
+                flipRightIn.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        onAnimation.animationEnd();
+                    }
+                });
+                flipRightIn.start();
+            }
+        });
+        flipCard();
+        flipRightOut.setTarget(imageView);
+        flipRightOut.start();
     }
 
 }
