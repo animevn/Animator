@@ -1,4 +1,4 @@
-package com.haanhgs.app.animatordemo.controller;
+package com.haanhgs.app.animatordemo.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -10,10 +10,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import com.haanhgs.app.animatordemo.R;
-import static com.haanhgs.app.animatordemo.controller.CardState.Back;
-import static com.haanhgs.app.animatordemo.controller.CardState.Front;
+import com.haanhgs.app.animatordemo.model.CardState;
+import static com.haanhgs.app.animatordemo.model.CardState.Back;
+import static com.haanhgs.app.animatordemo.model.CardState.Front;
 
-public class Controller {
+public class Repo {
 
     private Animation animFadeIn;
     private Animation animFadeOut;
@@ -51,7 +52,7 @@ public class Controller {
         flipRightOut = AnimatorInflater.loadAnimator(activity, R.animator.flip_right_out);
     }
 
-    public Controller(Activity activity, OnAnimation onAnimation) {
+    public Repo(Activity activity, OnAnimation onAnimation) {
         this.activity = activity;
         this.onAnimation = onAnimation;
         requestPortraitMode();

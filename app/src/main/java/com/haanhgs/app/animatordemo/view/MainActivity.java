@@ -5,8 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.haanhgs.app.animatordemo.R;
-import com.haanhgs.app.animatordemo.controller.Controller;
-import com.haanhgs.app.animatordemo.controller.OnAnimation;
+
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
     @BindView(R.id.bnAnimationRotate)
     Button bnAnimationRotate;
 
-    private Controller controller;
+    private Repo repo;
 
 
     @Override
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        controller = new Controller(this, this);
+        repo = new Repo(this, this);
     }
 
     @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight,
@@ -41,16 +40,16 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bnAnimatorLeft:
-                controller.handleFlipLeft(imageView);
+                repo.handleFlipLeft(imageView);
                 break;
             case R.id.bnAnimatorRight:
-                controller.handleFlipRight(imageView);
+                repo.handleFlipRight(imageView);
                 break;
             case R.id.bnAnimationFade:
-                controller.handleFadeIn(imageView);
+                repo.handleFadeIn(imageView);
                 break;
             case R.id.bnAnimationRotate:
-                controller.handleRotate(imageView);
+                repo.handleRotate(imageView);
                 break;
         }
     }
