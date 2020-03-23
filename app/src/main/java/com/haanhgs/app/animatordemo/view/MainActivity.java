@@ -5,21 +5,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.Toast;
-
 import com.haanhgs.app.animatordemo.R;
-import com.haanhgs.app.animatordemo.model.CardState;
 import com.haanhgs.app.animatordemo.viewmodel.MyViewModel;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import static com.haanhgs.app.animatordemo.model.CardState.Back;
-import static com.haanhgs.app.animatordemo.model.CardState.Front;
 
 public class MainActivity extends AppCompatActivity implements OnAnimation {
 

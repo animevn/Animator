@@ -100,17 +100,20 @@ public class Repo {
         imageView.setCameraDistance(6500 * scale);
     }
 
+    //remove animator listener when animator ends or else it will mix up with later animator
     public void handleFlipLeft(ImageView imageView){
         onAnimation.animationStart();
         flipLeftOut.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
+                animation.removeAllListeners();
                 flipLeftIn.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         onAnimation.animationEnd();
+                        animation.removeAllListeners();
                     }
                 });
                 onAnimation.animationBetween();
@@ -122,16 +125,19 @@ public class Repo {
         flipLeftOut.start();
     }
 
+    //remove animator listener when animator ends or else it will mix up with later animator
     public void handleFlipRight(ImageView imageView){
         onAnimation.animationStart();
         flipRightOut.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
+                animation.removeAllListeners();
                 flipRightIn.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
+                        animation.removeAllListeners();
                         onAnimation.animationEnd();
                     }
                 });
