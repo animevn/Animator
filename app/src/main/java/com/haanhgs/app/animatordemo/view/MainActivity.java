@@ -1,12 +1,19 @@
 package com.haanhgs.app.animatordemo.view;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.haanhgs.app.animatordemo.R;
+import com.haanhgs.app.animatordemo.model.Card;
+import com.haanhgs.app.animatordemo.model.CardState;
+import com.haanhgs.app.animatordemo.viewmodel.MyViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,14 +32,25 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
     Button bnAnimationRotate;
 
     private Repo repo;
+    private MyViewModel viewModel;
 
+    private void hideStatuBar(){
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        repo = new Repo(this, this);
+        hideStatuBar();
+        viewModel = new ViewModelProvider(this).get(MyViewModel.class);
+        viewModel.getLiveData().observe(this, card -> {
+            int img = card.getState() == CardState.Front ? R.drawable.ace : R.drawable.ace_back;
+            imageView.setImageResource(img);
+        });
+        repo = new Repo(this);
     }
 
     @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight,
@@ -70,7 +88,13 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
 
     @Override
     public void animationStart() {
-         disableButtons();
+        disableButtons();
+
+    }
+
+    @Override
+    public void animationBetween() {
+        viewModel.flipCard();
     }
 
     @Override

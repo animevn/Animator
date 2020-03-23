@@ -3,15 +3,12 @@ package com.haanhgs.app.animatordemo.view;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
-import android.view.WindowManager;
+import android.content.Context;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import com.haanhgs.app.animatordemo.R;
-import com.haanhgs.app.animatordemo.model.CardState;
-import static com.haanhgs.app.animatordemo.model.CardState.Back;
+import com.haanhgs.app.animatordemo.model.Card;
 import static com.haanhgs.app.animatordemo.model.CardState.Front;
 
 public class Repo {
@@ -24,49 +21,33 @@ public class Repo {
     private Animator flipLeftOut;
     private Animator flipRightIn;
     private Animator flipRightOut;
-
-    private final Activity activity;
-    private CardState cardState = Front;
+    private final Context context;
+    private Card card = new Card();
     private final OnAnimation onAnimation;
 
-    private void requestPortraitMode(){
-        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-
-    private void hideStatuBar(){
-        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
     private void initAnimation(){
-        animFadeIn = AnimationUtils.loadAnimation(activity, R.anim.fade_in);
-        animFadeOut = AnimationUtils.loadAnimation(activity, R.anim.fade_out);
-        animRotateLeft = AnimationUtils.loadAnimation(activity, R.anim.rotate_left);
-        animRotateRight = AnimationUtils.loadAnimation(activity, R.anim.rotate_right);
+        animFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+        animFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+        animRotateLeft = AnimationUtils.loadAnimation(context, R.anim.rotate_left);
+        animRotateRight = AnimationUtils.loadAnimation(context, R.anim.rotate_right);
     }
 
     private void initAnimator(){
-        flipLeftIn = AnimatorInflater.loadAnimator(activity, R.animator.flip_left_in);
-        flipLeftOut = AnimatorInflater.loadAnimator(activity, R.animator.flip_left_out);
-        flipRightIn = AnimatorInflater.loadAnimator(activity, R.animator.flip_right_in);
-        flipRightOut = AnimatorInflater.loadAnimator(activity, R.animator.flip_right_out);
+        flipLeftIn = AnimatorInflater.loadAnimator(context, R.animator.flip_left_in);
+        flipLeftOut = AnimatorInflater.loadAnimator(context, R.animator.flip_left_out);
+        flipRightIn = AnimatorInflater.loadAnimator(context, R.animator.flip_right_in);
+        flipRightOut = AnimatorInflater.loadAnimator(context, R.animator.flip_right_out);
     }
 
-    public Repo(Activity activity, OnAnimation onAnimation) {
-        this.activity = activity;
-        this.onAnimation = onAnimation;
-        requestPortraitMode();
-        hideStatuBar();
+    public Repo(Context context) {
+        this.context = context;
+        onAnimation = (OnAnimation)context;
         initAnimation();
         initAnimator();
     }
 
     private void renderImage(ImageView imageView){
-        imageView.setImageResource(cardState == Front ? R.drawable.ace : R.drawable.ace_back);
-    }
-
-    private void flipCard(){
-        cardState = cardState == Front ? Back : Front;
+        imageView.setImageResource(card.getState() == Front ? R.drawable.ace : R.drawable.ace_back);
     }
 
     public void handleFadeIn(ImageView imageView){
@@ -86,12 +67,11 @@ public class Repo {
                         onAnimation.animationEnd();
                     }
                 });
-                renderImage(imageView);
+                onAnimation.animationBetween();
                 animFadeIn.setDuration(2000);
                 imageView.startAnimation(animFadeIn);
             }
         });
-        flipCard();
         animFadeOut.setDuration(2000);
         imageView.startAnimation(animFadeOut);
     }
@@ -113,18 +93,17 @@ public class Repo {
                         onAnimation.animationEnd();
                     }
                 });
-                renderImage(imageView);
+                onAnimation.animationBetween();
                 animFadeIn.setDuration(2000);
                 imageView.startAnimation(animRotateRight);
             }
         });
-        cardState = cardState == Front ? Back : Front;
         animFadeOut.setDuration(2000);
         imageView.startAnimation(animRotateLeft);
     }
 
     private void setupViewport(ImageView imageView){
-        float scale = activity.getResources().getDisplayMetrics().density;
+        float scale = context.getResources().getDisplayMetrics().density;
         imageView.setCameraDistance(6500 * scale);
     }
 
@@ -147,7 +126,7 @@ public class Repo {
                 flipLeftIn.start();
             }
         });
-        flipCard();
+        card.flipCard();
         flipLeftOut.setTarget(imageView);
         flipLeftOut.start();
     }
@@ -171,7 +150,7 @@ public class Repo {
                 flipRightIn.start();
             }
         });
-        flipCard();
+        card.flipCard();
         flipRightOut.setTarget(imageView);
         flipRightOut.start();
     }
