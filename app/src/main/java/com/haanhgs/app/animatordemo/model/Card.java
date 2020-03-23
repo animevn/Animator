@@ -1,8 +1,11 @@
 package com.haanhgs.app.animatordemo.model;
 
+import static com.haanhgs.app.animatordemo.model.CardState.Back;
+import static com.haanhgs.app.animatordemo.model.CardState.Front;
+
 public class Card {
 
-    private CardState state = CardState.Front;
+    private CardState state = Front;
 
     public CardState getState() {
         return state;
@@ -13,6 +16,6 @@ public class Card {
     }
 
     public void flipCard(){
-        state = state == CardState.Front ? CardState.Back : CardState.Front;
+        state = (state == Front) ? Back : Front;
     }
 }

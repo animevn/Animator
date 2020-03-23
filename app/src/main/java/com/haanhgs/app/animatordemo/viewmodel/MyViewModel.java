@@ -24,12 +24,10 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void flipCard(){
-        if (liveData.getValue() == null){
-            liveData.setValue(new Card());
+        if (liveData.getValue() != null){
+            Card card = liveData.getValue();
+            card.flipCard();
+            liveData.setValue(card);
         }
-        liveData.getValue().flipCard();
-        liveData.setValue(liveData.getValue());
     }
-
-
 }

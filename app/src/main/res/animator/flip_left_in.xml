@@ -13,7 +13,7 @@
         android:valueTo="0"
         android:propertyName="rotationY"
         android:interpolator="@android:interpolator/decelerate_quad"
-        android:duration="500" />
+        android:duration="1000" />
 
     <!-- Half-way through the rotation (see startOffset), set the alpha to 1. -->
 <!--    <objectAnimator-->

@@ -8,8 +8,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import com.haanhgs.app.animatordemo.R;
-import com.haanhgs.app.animatordemo.model.Card;
-import static com.haanhgs.app.animatordemo.model.CardState.Front;
 
 public class Repo {
 
@@ -22,7 +20,6 @@ public class Repo {
     private Animator flipRightIn;
     private Animator flipRightOut;
     private final Context context;
-    private Card card = new Card();
     private final OnAnimation onAnimation;
 
     private void initAnimation(){
@@ -44,10 +41,6 @@ public class Repo {
         onAnimation = (OnAnimation)context;
         initAnimation();
         initAnimator();
-    }
-
-    private void renderImage(ImageView imageView){
-        imageView.setImageResource(card.getState() == Front ? R.drawable.ace : R.drawable.ace_back);
     }
 
     public void handleFadeIn(ImageView imageView){
@@ -102,20 +95,17 @@ public class Repo {
         imageView.startAnimation(animRotateLeft);
     }
 
-    private void setupViewport(ImageView imageView){
+    public void setupViewport(ImageView imageView){
         float scale = context.getResources().getDisplayMetrics().density;
         imageView.setCameraDistance(6500 * scale);
     }
 
     public void handleFlipLeft(ImageView imageView){
-        setupViewport(imageView);
         onAnimation.animationStart();
         flipLeftOut.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                renderImage(imageView);
-                flipLeftIn.setTarget(imageView);
                 flipLeftIn.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -123,23 +113,21 @@ public class Repo {
                         onAnimation.animationEnd();
                     }
                 });
+                onAnimation.animationBetween();
+                flipLeftIn.setTarget(imageView);
                 flipLeftIn.start();
             }
         });
-        card.flipCard();
         flipLeftOut.setTarget(imageView);
         flipLeftOut.start();
     }
 
     public void handleFlipRight(ImageView imageView){
-        setupViewport(imageView);
         onAnimation.animationStart();
         flipRightOut.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                renderImage(imageView);
-                flipRightIn.setTarget(imageView);
                 flipRightIn.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -147,10 +135,11 @@ public class Repo {
                         onAnimation.animationEnd();
                     }
                 });
+                onAnimation.animationBetween();
+                flipRightIn.setTarget(imageView);
                 flipRightIn.start();
             }
         });
-        card.flipCard();
         flipRightOut.setTarget(imageView);
         flipRightOut.start();
     }

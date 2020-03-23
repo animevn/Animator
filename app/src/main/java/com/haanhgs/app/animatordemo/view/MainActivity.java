@@ -1,22 +1,25 @@
 package com.haanhgs.app.animatordemo.view;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Toast;
+
 import com.haanhgs.app.animatordemo.R;
-import com.haanhgs.app.animatordemo.model.Card;
 import com.haanhgs.app.animatordemo.model.CardState;
 import com.haanhgs.app.animatordemo.viewmodel.MyViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.haanhgs.app.animatordemo.model.CardState.Back;
+import static com.haanhgs.app.animatordemo.model.CardState.Front;
 
 public class MainActivity extends AppCompatActivity implements OnAnimation {
 
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
 
     private Repo repo;
     private MyViewModel viewModel;
+    int imgResource;
 
     private void hideStatuBar(){
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -47,10 +51,11 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
         hideStatuBar();
         viewModel = new ViewModelProvider(this).get(MyViewModel.class);
         viewModel.getLiveData().observe(this, card -> {
-            int img = card.getState() == CardState.Front ? R.drawable.ace : R.drawable.ace_back;
-            imageView.setImageResource(img);
+            imgResource = card.getState() == Back ? R.drawable.ace_back : R.drawable.ace;
+            imageView.setImageResource(imgResource);
         });
         repo = new Repo(this);
+        repo.setupViewport(imageView);
     }
 
     @OnClick({R.id.bnAnimatorLeft, R.id.bnAnimatorRight,
