@@ -1,4 +1,4 @@
-package com.haanhgs.app.animatordemo.view;
+package com.haanhgs.app.animator.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -7,7 +7,7 @@ import android.content.Context;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import com.haanhgs.app.animatordemo.R;
+import com.haanhgs.app.animator.R;
 
 public class Repo {
 

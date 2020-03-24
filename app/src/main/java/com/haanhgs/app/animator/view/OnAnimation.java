@@ -1,4 +1,4 @@
-package com.haanhgs.app.animatordemo.view;
+package com.haanhgs.app.animator.view;
 
 public interface OnAnimation {
     void animationStart();

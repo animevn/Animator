@@ -1,14 +1,14 @@
-package com.haanhgs.app.animatordemo.viewmodel;
+package com.haanhgs.app.animator.viewmodel;
 
 import android.app.Application;
-import com.haanhgs.app.animatordemo.model.Card;
+import com.haanhgs.app.animator.model.Card;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 public class MyViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Card>liveData = new MutableLiveData<>();
+    private final MutableLiveData<Card>liveData = new MutableLiveData<>();
 
     public MyViewModel(@NonNull Application application) {
         super(application);

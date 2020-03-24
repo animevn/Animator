@@ -1,7 +1,7 @@
-package com.haanhgs.app.animatordemo.model;
+package com.haanhgs.app.animator.model;
 
-import static com.haanhgs.app.animatordemo.model.CardState.Back;
-import static com.haanhgs.app.animatordemo.model.CardState.Front;
+import static com.haanhgs.app.animator.model.CardState.Back;
+import static com.haanhgs.app.animator.model.CardState.Front;
 
 public class Card {
 
