@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements OnAnimation {
     @Override
     public void animationStart() {
         disableButtons();
-
     }
 
     @Override
