@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import static com.haanhgs.app.animator.model.CardState.Back;
 
+//test delete folder in git
 public class MainActivity extends AppCompatActivity implements OnAnimation {
 
     @BindView(R.id.imageView)
